@@ -1,36 +1,27 @@
 import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import { prisma } from './lib/prisma'
 
-import { Pool } from 'pg';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '@prisma/client';
 
-dotenv.config();
+import staffRoutes from './routes/staff.routes';
+import authRoutes from './routes/auth.routes';
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const adapter = new PrismaPg(pool);
-export const prisma = new PrismaClient({ adapter });
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
+
+app.use('/api/auth', authRoutes);
+app.use('/api', staffRoutes);
 
 app.get('/guests', async (_, res) => {
-  const guests = await prisma.guest.findUnique({
-    where: {email: 'nick@example.com'},
-  });
+  console.log('Fetching guests...');
+  const guests = await prisma.guest.findMany();
   res.json(guests);
 })
 
 const PORT = process.env.PORT || 8080;
-
-app.get('/api/health', (req: Request, res: Response) => {
-    res.status(200).json({
-      status: 'OK',
-      timestamp: new Date().toISOString(),
-      service: 'hotel-sync-backend'
-    });
-  });
   
-  app.listen(PORT, () => {
-    console.log(`🚀 Сервер успішно запущено на порту ${PORT}`);
-  })
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
