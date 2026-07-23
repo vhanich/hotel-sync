@@ -21,10 +21,10 @@ async function seed() {
 
     const staffToCreate = [
         {name: 'Valia', password: 'adminhotel@example.com', email: 'valia@example.com', role: 'ADMIN', staffId: 'ADM-001'},
-        {name: 'Valia H', pinCode: '247890', email: 'valiatest@example.com', role: 'CLEANER', staffId: 'CLN-001'},
-        {name: 'Max H', pinCode: '113889', email: 'maxtest@example.com', role: 'REPAIRMAN', staffId: 'REP-001'},
-        {name: 'Olena', pinCode: '191101', email: 'olenatest@example.com', role: 'CLEANER', staffId: 'CLN-002'},
-        {name: 'Anna', pinCode: '191203', email: 'annatest@example.com', role: 'CLEANER', staffId: 'CLN-003'},
+        {name: 'Valia H', pinCode: '2478', email: 'valiatest@example.com', role: 'CLEANER', staffId: 'CLN-001'},
+        {name: 'Max H', pinCode: '1138', email: 'maxtest@example.com', role: 'REPAIRMAN', staffId: 'REP-001'},
+        {name: 'Olena', pinCode: '1911', email: 'olenatest@example.com', role: 'CLEANER', staffId: 'CLN-002'},
+        {name: 'Anna', pinCode: '1912', email: 'annatest@example.com', role: 'CLEANER', staffId: 'CLN-003'},
     ];
 
     for (const staff of staffToCreate) {

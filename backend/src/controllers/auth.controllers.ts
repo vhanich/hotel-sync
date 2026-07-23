@@ -5,17 +5,16 @@ import { generateAccessToken } from '../utils/jwt';
 
 export const login = async (req: Request, res: Response) => {
     const { staffId, password } = req.body;
-    console.log('Staff ID:', staffId);
 
     try {
         const user = await prisma.staff.findUnique({ where: { staffId } });
         if (!user) {
-            return res.status(401).json({ error: 'Invalid staff ID or password' });
+            return res.status(401).json({ error: 'Invalid staff ID!' });
         }
 
         if (user.role !== "ADMIN") {
             return res.status(403).json({
-                error: "Only ADMIN users can log in with password."
+                error: "Only ADMIN users can log in with password!"
             });
         }
 
@@ -50,7 +49,7 @@ export const loginWithPin = async (req: Request, res: Response) => {
     try {
         const user = await prisma.staff.findUnique({ where: { staffId } });
         if (!user) {
-            return res.status(401).json({ error: 'Invalid staff ID or pin code' });
+            return res.status(401).json({ error: 'Invalid Staff ID' });
         }
         
         if (user.role === 'ADMIN') {
@@ -83,3 +82,21 @@ export const loginWithPin = async (req: Request, res: Response) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+export const getMe = async (req: Request, res: Response) => {
+    return res.status(200).json({
+        status: 'success',
+        data: {
+            user: req.user
+        } 
+    });
+};
+
+export const logout = async (req: Request, res: Response) => {
+    return res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict'
+    }).status(200).json({ message: 'Logged out successfully' });
+};
+

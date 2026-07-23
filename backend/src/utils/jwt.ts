@@ -7,9 +7,11 @@ export const generateAccessToken = async (user:{
     id: string,
     role: StaffRole
 }) => {
-    return await new SignJWT({ role: user.role })
+    return await new SignJWT({ 
+        id: user.id,
+        role: user.role 
+    })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-        .setSubject(user.id)
         .setIssuedAt()
         .setExpirationTime('15m')
         .sign(secretKey);

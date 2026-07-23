@@ -5,8 +5,8 @@ import {
     updateStaff, 
     deleteStaff 
 } from '../controllers/staff.controllers';
-import { authenticate } from '../middleware/authenticate';
-import { restrictTo } from '../middleware/restrictTo';
+import { authenticate } from '../middleware/authenticate.middleware';
+import { restrictTo } from '../middleware/restrictTo.middleware';
 
 const route = Router();
 

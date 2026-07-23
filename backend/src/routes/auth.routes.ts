@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { login, loginWithPin } from '../controllers/auth.controllers';
+import { login, loginWithPin, getMe, logout } from '../controllers/auth.controllers';
+import { protect } from '../middleware/protect.middleware';
 
 const route = Router();
 
-route.put('/login', login);
-route.put('/pin', loginWithPin);
+route.post('/login', login);
+route.post('/pin', loginWithPin);
+route.get('/me', protect, getMe);
+route.post('/logout', protect, logout);
 
 export default route;
