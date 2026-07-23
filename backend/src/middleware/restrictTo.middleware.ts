@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { Staff } from '@prisma/client';
-
 
 export const restrictTo = (allowedRoles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
