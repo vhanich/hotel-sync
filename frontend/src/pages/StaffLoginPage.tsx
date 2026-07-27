@@ -5,9 +5,9 @@ import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import { PinLoginForm } from '../components/auth/PinLoginForm';
 
-export default function StaffLoginPage() {
+export const StaffLoginPage = () => {
     const [error, setError] = useState('')
-    const { loginStaff, authLoading } = useAuth();
+    const { loginStaff, authLoading, user } = useAuth();
 
     const navigate = useNavigate();
 
@@ -19,8 +19,9 @@ export default function StaffLoginPage() {
                 staffId,
                 pinCode
             });
-
+            console.log(user);
             
+            navigate('/dashboard');
         } catch (err) {
             if (axios.isAxiosError(err)) {
                 setError(err.response?.data?.error);
