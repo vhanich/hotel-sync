@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { LoginForm } from '../components/auth/LoginForm';
 
-export default function LoginPage() {
+export const LoginPage = () => {
     const [ error, setError ] = useState<string>('')
     const { loginAdmin, authLoading} = useAuth();
+
+    const navigate = useNavigate();
     
     const handleLogin = async (staffId: string, password: string) => {
         
@@ -17,6 +19,8 @@ export default function LoginPage() {
                 staffId, 
                 password
             });
+
+            navigate('/dashboard');
            
         } catch (err) {
             if (axios.isAxiosError(err)) {

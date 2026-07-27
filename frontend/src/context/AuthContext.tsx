@@ -24,11 +24,10 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [initializing, setInitializing] = useState<boolean>(false);
+    const [initializing, setInitializing] = useState<boolean>(true);
     const [authLoading, setAuthLoading] = useState<boolean>(false);  
 
     const checkCurrentUser = async () => {
-        setInitializing(true)
         try {
             const response = await API.get('/auth/me');
             const currentUser = response.data.data.user;
