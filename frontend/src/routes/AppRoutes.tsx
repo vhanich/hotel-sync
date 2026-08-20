@@ -6,7 +6,7 @@ import { MainLayout } from '../layouts/mainLayout/MainLayout';
 import { DashboardPage } from '../pages/DashboardPage';
 import { ForbiddenPage } from '../pages/ForbiddenPage';
 import { ProtectedRoute } from './ProtectedRoute';
-import { StaffManagementPage } from '../pages/StaffManagementPage';
+import { StaffPage } from '../pages/StaffPage';
 
 
 export const AppRoutes = () => {
@@ -21,7 +21,7 @@ export const AppRoutes = () => {
                     <Route path='/403' element={<ForbiddenPage />} />
 
                     <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />} >
-                        <Route path='/staff' element={<StaffManagementPage />} />
+                        <Route path='/staff' element={<StaffPage />} />
                         {/* <Route path='/reservations' element={<ReservationPage />} /> */}
                     </Route>
 

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
-import API from '../services/api';
+import API from '../services/api-axios';
 
 interface User {
     id: string;

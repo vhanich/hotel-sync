@@ -13,8 +13,8 @@ import {
     
 } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
-import { navigationItems } from '../../config/navigation';
-import { rolePermissions } from '../../config/permissions';
+import { navigationItems } from '../../config/navigation.config';
+import { rolePermissions } from '../../config/permissions.config';
 
 // const DRAWER_WIDTH = 240;
 

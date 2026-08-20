@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import type { StaffRole } from '../types/auth';
+import type { StaffRole } from '../types/auth.types';
 
 interface ProtectedRouteProps {
     allowedRoles?: StaffRole[];

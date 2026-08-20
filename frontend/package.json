@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@hookform/resolvers": "^5.7.1",
     "@mui/icons-material": "^9.2.0",
     "@mui/material": "^9.2.0",
     "axios": "^1.18.1",
@@ -19,7 +20,9 @@
     "jwt-decode": "^4.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.1"
+    "react-hook-form": "^7.85.0",
+    "react-router-dom": "^7.18.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
