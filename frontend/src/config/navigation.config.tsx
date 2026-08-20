@@ -1,10 +1,9 @@
-import React from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import HotelIcon from '@mui/icons-material/Hotel';
 
-import type { NavigationItem } from '../types/navigation';
+import type { NavigationItem } from '../types/navigation.types';
 
 export const navigationItems: NavigationItem[] = [
     {
