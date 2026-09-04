@@ -12,10 +12,6 @@ export const prepareCredentialsUpdate = async ({
     password,
     pinCode
 }: CredentialsInput) => {
-
-    console.log('role', role);
-    console.log('password', password);
-    console.log('pin', pinCode);
     
     if (role === 'ADMIN') {
         if (!password) {

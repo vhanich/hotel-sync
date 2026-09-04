@@ -6,6 +6,7 @@ import { prisma } from './lib/prisma'
 
 import staffRoutes from './routes/staff.routes';
 import authRoutes from './routes/auth.routes';
+import roomRoutes from './routes/room.routes';
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors({
 
 app.use('/api/auth', authRoutes);
 app.use('/api', staffRoutes); 
+app.use('/api', roomRoutes);
 
 app.get('/guests', async (_, res) => {
   console.log('Fetching guests...');
