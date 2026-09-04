@@ -43,8 +43,9 @@ model Staff {
 
   email           String?             @unique
   hashedPassword  String?             @unique 
-   
   hashedPinCode   String? 
+
+  maintenanceIssue  MaintenanceIssue[]
 
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
@@ -58,6 +59,75 @@ model Guest {
 
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
+}
+
+enum RoomType {
+  STANDARD
+  SUPERIOR
+  DELUXE
+  PREMIUM
+  LUXURY
+}
+
+enum RoomOccupancyStatus {
+  VACANT
+  OCCUPIED
+}
+
+enum HousekeepingStatus {
+  CLEAN
+  DIRTY
+  CLEANING
+  INSPECTION_REQUIRED
+}
+
+enum RoomMaintenanceStatus {
+  OPERATIONAL
+  UNDER_MAINTENANCE
+  OUT_OF_ORDER
+}
+
+model Room {
+  id                      String                          @id @default(uuid())
+  number                  String                          @unique
+  floor                   Int
+
+  type                    RoomType
+  capacity                Int
+
+  occupancyStatus         RoomOccupancyStatus       @default(VACANT)
+  housekeepingStatus      HousekeepingStatus        @default(CLEAN)
+
+  maintenanceStatus       RoomMaintenanceStatus     @default(OPERATIONAL)
+  maintenanceIssue        MaintenanceIssue[]
+
+  isActive                Boolean                        @default(true)
+
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+}
+
+enum MaintenanceIssueStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+model MaintenanceIssue {
+  id                String                          @id @default(uuid())
+  roomId            String
+  description       String
+  createdById       String
+
+  status            MaintenanceIssueStatus          @default(OPEN)
+
+  createdAt         DateTime                        @default(now())
+  updatedAt         DateTime                        @updatedAt
+  resolvedAt        DateTime?
+
+  room              Room                            @relation(fields: [roomId], references: [id])
+  createdBy         Staff                           @relation(fields: [createdById], references: [id])
 }
 
 
