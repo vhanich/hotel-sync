@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { prisma } from '../lib/prisma';
 import type { Prisma, PrismaClient, StaffRole } from '@prisma/client';
 
-import { prepareCredentialsUpdate } from '../services/credentialsUpdate.service';
+import { prepareCredentialsUpdate } from '../services/auth.service/credentialsUpdate.service';
 
 export const getAllStaff = async (req: Request, res: Response) => {
     try {

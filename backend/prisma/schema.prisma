@@ -53,8 +53,11 @@ model Staff {
 
 model Guest {
   id              String              @id @default(uuid())
-  name            String     
-  phone           String              @unique
+
+  reservations     Reservation[]
+
+  fullName        String     
+  phoneNumber     String              
   email           String              @unique
 
   createdAt       DateTime            @default(now())
@@ -92,6 +95,8 @@ model Room {
   number                  String                          @unique
   floor                   Int
 
+  reservations               Reservation[]
+
   type                    RoomType
   capacity                Int
 
@@ -101,10 +106,10 @@ model Room {
   maintenanceStatus       RoomMaintenanceStatus     @default(OPERATIONAL)
   maintenanceIssue        MaintenanceIssue[]
 
-  isActive                Boolean                        @default(true)
+  isActive                Boolean                    @default(true)
 
-  createdAt               DateTime            @default(now())
-  updatedAt               DateTime            @updatedAt
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
 }
 
 enum MaintenanceIssueStatus {
@@ -115,19 +120,54 @@ enum MaintenanceIssueStatus {
 }
 
 model MaintenanceIssue {
-  id                String                          @id @default(uuid())
+  id                String                           @id @default(uuid())
   roomId            String
   description       String
   createdById       String
 
-  status            MaintenanceIssueStatus          @default(OPEN)
+  status            MaintenanceIssueStatus           @default(OPEN)
 
-  createdAt         DateTime                        @default(now())
-  updatedAt         DateTime                        @updatedAt
+  createdAt         DateTime                         @default(now())
+  updatedAt         DateTime                         @updatedAt
   resolvedAt        DateTime?
 
-  room              Room                            @relation(fields: [roomId], references: [id])
-  createdBy         Staff                           @relation(fields: [createdById], references: [id])
+  room              Room                             @relation(fields: [roomId], references: [id])
+  createdBy         Staff                            @relation(fields: [createdById], references: [id])
 }
 
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  CHECKED_IN
+  CHECKED_OUT
+}
+
+model Reservation {
+  id                 String                           @id @default(uuid())
+  reservationNumber  String                           @unique
+  
+  roomId             String
+  room               Room                             @relation(fields: [roomId], references: [id])
+  
+  guestId            String
+  guest              Guest                            @relation(fields: [guestId], references: [id])
+  guestCount         Int 
+
+  checkInDate        DateTime
+  checkOutDate       DateTime
+
+  reservationStatus   ReservationStatus                @default(PENDING)
+  cancelledAt        DateTime?
+  notes              String?
+
+  createdAt          DateTime                          @default(now())
+  updatedAt          DateTime                           @updatedAt        
+}
+
+model ReservationCounter {
+  year        Int      @id
+  lastNumber  Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
 

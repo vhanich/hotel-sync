@@ -20,8 +20,7 @@ import {
     updateMaintenanceServise,
     activateRoomService,
     deactivateRoomService
-} from '../services/room.service';
-import { log } from 'console';
+} from '../services/room.service/room.service';
 
 export const createRoom = async (
     req: Request,
@@ -163,7 +162,6 @@ export const deactivateRoom = async (
 ) => {
     try {
         const { id } = roomIdParamsSchema.parse(req.params);
-        console.log('котроллер відпрацював!');
         
         const room = await deactivateRoomService(id);
         res.status(200).json(room);

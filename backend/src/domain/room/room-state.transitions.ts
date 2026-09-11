@@ -68,7 +68,7 @@ const maintenanceTransitions: Record<
 
 export const validateMaintenanceTransition = (
     current: MaintenanceStatus,
-    next: MaintenanceStatus
+    next: MaintenanceStatus 
 ): void => {
     if (!maintenanceTransitions[current].includes(next)) {
         throw new Error('INVALID_MAINTENANCE_TRANSITION')

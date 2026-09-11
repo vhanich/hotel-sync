@@ -4,6 +4,10 @@ import { PrismaClient } from '.prisma/client/default.js';
 
 import { staffToCreate } from './defaultData/staffData';
 import { roomsToCreate } from './defaultData/roomData';
+import { guestsToCreate } from './defaultData/guestData'
+import { reservationsToCreate } from './defaultData/reservationsData';
+
+import { generateReservationNumber } from '../src/utils/reservation/reservation-number';
 
 const generateStaffId = async (
             prisma: PrismaClient
@@ -19,21 +23,21 @@ const generateStaffId = async (
 
 async function seed() {
     console.log('Clearing existing data...');
-    await prisma.guest.deleteMany();
+
     await prisma.staff.deleteMany();
     await prisma.$executeRaw`ALTER SEQUENCE staff_id_seq RESTART WITH 1`;
+
+    await prisma.reservation.deleteMany();
+    await prisma.guest.deleteMany();
     await prisma.room.deleteMany();
 
     console.log('Seeding guests data...');
 
-    await prisma.guest.createMany({ 
-        data: [
-            { name: 'Alise A', phone: '+48567431297', email: 'alisetest@example.com' },
-            { name: 'Max A', phone: '+48567431213', email: 'maxtest@example.com' },
-            { name: 'Nick A', phone: '+48567431238', email: 'nicktest@example.com' },
-
-        ]
-    });
+    for (const guest of guestsToCreate) {
+        await prisma.guest.create({
+            data: guest,
+        });
+    }
 
     console.log('Seeding staff data...');
 
@@ -60,6 +64,47 @@ async function seed() {
     console.log('Seeding room data...');
     await prisma.room.createMany({ data: roomsToCreate })
 
+    console.log('Seeding reservation data...');
+    await prisma.$transaction( async (tx) => {
+        for (const reservation of reservationsToCreate) {
+            const room = await tx.room.findUnique({ 
+                where: { number: reservation.roomNumber } 
+            });
+
+            if (!room) {
+                throw new Error(
+                    `Room ${reservation.roomNumber} not found`,
+                );
+            }  
+
+            const guest = await tx.guest.findUnique({
+                where: {
+                    email: reservation.guestEmail,
+                },
+            });
+
+            if (!guest) {
+                throw new Error(
+                    `Guest ${reservation.guestEmail} not found`,
+                );
+            }
+
+            const reservationNumber = await generateReservationNumber(tx);
+
+            await tx.reservation.create({
+                data: {
+                    reservationNumber: reservationNumber,
+                    roomId: room.id,
+                    guestId: guest.id,
+                    checkInDate: reservation.checkInDate,
+                    checkOutDate: reservation.checkOutDate,
+                    guestCount: reservation.guestCount,
+                    reservationStatus: reservation.reservationStatus,
+                    cancelledAt: reservation.cancelledAt ?? null,
+                },
+            });
+        }
+    }); 
 };
 
 seed()
