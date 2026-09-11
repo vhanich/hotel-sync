@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma';
+import { prisma } from '../../lib/prisma';
 import { Room } from '@prisma/client';
 
 import {
@@ -8,19 +8,19 @@ import {
     UpdateMaintenanceInput,
     UpdateOccupancyInput,
     UpdateRoomInput,
-} from '../validators/room/room.validation';
+} from '../../validators/room/room.validation';
 
 import {
     validateOccupancyTransition,
     validateHousekeepingTransition,
     validateMaintenanceTransition
-} from '../domain/room/room-state.transitions';
+} from '../../domain/room/room-state.transitions';
 
 import { 
     validateOccupancyRules,
     validateUpdateRoomRules,
     validateMaitenanceRules 
-} from '../domain/room/room-state.rules'
+} from '../../domain/room/room-state.rules'
 
 export const getRoomsServise = async (query: GetRoomsQuery) => {
     const {

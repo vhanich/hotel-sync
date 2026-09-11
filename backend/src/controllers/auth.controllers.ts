@@ -12,15 +12,15 @@ export const login = async (req: Request, res: Response) => {
             return res.status(401).json({ error: 'Invalid staff ID!' });
         }
 
-        if (user.role !== "ADMIN") {
+        if (user.role !==  'ADMIN') {
             return res.status(403).json({
-                error: "Only ADMIN users can log in with password!"
+                error: 'Only ADMIN users can log in with password!'
             });
         }
 
         if (!user.hashedPassword) {
             return res.status(400).json({
-                error: "Password is not configured."
+                error: 'Password is not configured.'
             });
         }
 

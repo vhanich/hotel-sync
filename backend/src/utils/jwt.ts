@@ -13,7 +13,7 @@ export const generateAccessToken = async (user:{
     })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
         .setIssuedAt()
-        .setExpirationTime('15m')
+        .setExpirationTime('1h')
         .sign(secretKey);
 };
 
